@@ -60,7 +60,8 @@ h3. Moving from Simulation to Real TX
 
 Now, let's move from simulation to actually transmitting! First, connect your transmit antenna to your spectrum analyzer (if you intend to actually transmit).
 
-Since we are no longer simulating a signal, let's get rid of that noise source and the adder. We will keep the throttle block, but *only* use it for our 'WX Constellation Sink'. The UHD sink does not require the use of a throttle block (for more on this, read this note in the [[FAQ#When-do-I-use-a-throttle-block]]).
+Since we are no longer simulating a signal, let's get rid of that noise source and the adder.
+The USRP sink consumes a fixed amount of samples per second, so we do not require a throttle block to limit our processing speed anymore (for more on this, read this note in the [[FAQ#When-do-I-use-a-throttle-block]]).
 
 Changing our program from being a simulation to an operational software radio is now as easy as dropping a new _sink_ block into our flowgraph. Finding the 'UHD: USRP Sink' block, adding it to our flowgraph, and connecting it to our modulator's output brings our signal from simulation to electromagnetic waves!
 
