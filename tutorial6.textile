@@ -2,9 +2,9 @@
 
 *Responsible: Ben*
 
-h1. Using GNURadio with Hardware
+h1. Using GNU Radio with Hardware
 
-So far, all of the tutorials in this series have centered around using GNURadio as a prototyping & development platform through simulation. One of the great strengths of GNURadio, though, is how easy it is to move from simulation to real-world operation. In this tutorial, we will build on what you have learned so far and create a real-world transmitters and receivers.
+So far, all of the tutorials in this series have centered around using GNU Radio as a prototyping & development platform through simulation. One of the great strengths of GNU Radio, though, is how easy it is to move from simulation to real-world operation. In this tutorial, we will build on what you have learned so far and create a real-world transmitters and receivers.
 
 In this tutorial, we will take your previous QPSK design and turn it into an actual transmitter. We will also build, from-scratch, a complete FM radio receiver that you can use to listen to your local FM radio stations. Along the way, we will discuss a number of considerations that come into play when working with real-world radio hardware.
 
@@ -18,7 +18,7 @@ h2. What Will I Need?
 
 If you don't have an actual radio to work with, this tutorial is still useful. The first section (transmitting) will teach you the basics of interfacing with hardware. For the second section, we have provided a recording from an actual radio, with nothing done to the data. You can use this in your flowgraph to simulate hardware passing you samples. *[TODO: Actually provide this recording]*
 
-This tutorial will be most useful, though, if you have a piece of radio hardware that you can use with GNURadio. There is a large and growing number of vendors that provide hardware with GNURadio drivers, and they span from very cheap $20 receivers to very high-performance tens-of-thousands-of-dollars sort of systems.
+This tutorial will be most useful, though, if you have a piece of radio hardware that you can use with GNU Radio. There is a large and growing number of vendors that provide hardware with GNU Radio drivers, and they span from very cheap $20 receivers to very high-performance tens-of-thousands-of-dollars sort of systems.
 
 The entirety of this tutorial is possible with a simple, low-bandwidth, half-duplex radio. Most of the tutorial is possible if you have a radio that can only receive, assuming it can tune to the FM bands. Most countries allot between ~87 MHz and ~108 MHz to FM broadcast radio, with some slight variations on the floor and ceiling of the range.
 
@@ -34,7 +34,7 @@ The author is using an "Ettus Research USRP B200":http://b200.ettus.com, which u
 
 If you are using a different piece of hardware, you should use the blocks suggested by your hardware vendor. Another set of popular HW blocks, for example, is "gr-osmosdr":http://sdr.osmocom.org/trac/wiki/GrOsmoSDR.
 
-In order to use UHD blocks, you must have UHD installed. There are a number of ways to install UHD, which you can read about "here":http://code.ettus.com/redmine/ettus/projects/uhd/wiki. If you built GNURadio from source, you should have seen *gr-uhd* in the list of components being built in the CMake output. If GNURadio successfully found your UHD installation, you should see a group of UHD blocks in the GNURadio Companion:
+In order to use UHD blocks, you must have UHD installed. There are a number of ways to install UHD, which you can read about "here":http://code.ettus.com/redmine/ettus/projects/uhd/wiki. If you built GNU Radio from source, you should have seen *gr-uhd* in the list of components being built in the CMake output. If GNU Radio successfully found your UHD installation, you should see a group of UHD blocks in the GNU Radio Companion:
 
 !grc_uhd_blocks.png!
 
@@ -84,7 +84,7 @@ If you have had trouble following the instructions above, download the flowgraph
 
 h3. A Working Software Radio Transmitter
 
-If you execute your flowgraph, you should see the usual initialization and GUI launch - except, instead of everything being simulation, you are actually transmitting your QPSK signal. Because we have our TX signal going to both the 'WX Constellation Sink' and 'UHD Sink', we can look at the symbol constellation as GNURadio sees it, and the constellation as the analyzer sees it (if your analyzer has a QPSK demod function).
+If you execute your flowgraph, you should see the usual initialization and GUI launch - except, instead of everything being simulation, you are actually transmitting your QPSK signal. Because we have our TX signal going to both the 'WX Constellation Sink' and 'UHD Sink', we can look at the symbol constellation as GNU Radio sees it, and the constellation as the analyzer sees it (if your analyzer has a QPSK demod function).
 
 If we look at just the spectrum on the analyzer, you should be able to clearly see your signal at the frequency you selected. If you can't see it, double-check your parameters, and also try turning up your radio gain.
 
@@ -98,7 +98,7 @@ In this section, we will build a working FM radio receiver that you can use to l
 
 h3. Creating a Software Radio Spectrum Analyzer
 
-One of the more basic (but also incredibly useful) things you can do in GNURadio with a receiver is simply plot a real-time FFT of what your receiver sees. It's a software radio spectrum analyzer. This is also a great first step because it will verify that your hardware is working correctly, and we can use it to identify broadcast stations in your area that we will tune to later on.
+One of the more basic (but also incredibly useful) things you can do in GNU Radio with a receiver is simply plot a real-time FFT of what your receiver sees. It's a software radio spectrum analyzer. This is also a great first step because it will verify that your hardware is working correctly, and we can use it to identify broadcast stations in your area that we will tune to later on.
 
 Create a new flowgraph. Drop a 'UHD: USRP Source' and 'WX GUI FFT Sink' into the canvas. In the the previous section, we used static variables for frequency and gain. Here, let's make them changeable on-the-fly. Find the 'WX GUI Slider', and add two of them to your flowgraph. Open each of them, and fill out the following fields as appropriate for your hardware. Mine are filled out, below, to match the capabilities of the USRP B200:
 
@@ -108,7 +108,7 @@ Create a new flowgraph. Drop a 'UHD: USRP Source' and 'WX GUI FFT Sink' into the
 * *Default Value:* 1e9
 * *Minimum:* 70e6
 * *Maximum:* 6e9
-* *Num Steps:* 1000 (_NB: The maximum number of steps in GNURadio is 1000)
+* *Num Steps:* 1000 (_NB: The maximum number of steps in GNU Radio is 1000)
 * *Converter:* Float
 
 +*Gain Slider*+
